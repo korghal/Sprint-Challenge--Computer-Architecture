@@ -189,11 +189,27 @@ class CPU:
                 else:
                     # Continue
                     self.pc += 2
-            '''
-            elif IR = self.CALL_code:
-                
+            
+            elif IR == self.CMP_code:
+                print('COMPARE CODE')
+                regA = self.reg[self.ram[self.pc + 1]]
+                regB = self.reg[self.ram[self.pc +2]]
+                # `FL` bits: `00000LGE`
+                if regA == regB:
+                    # Equal to
+                    self.fl = 0b00000001
+                elif regA > regB:
+                    # Greater than
+                    self.fl = 0b00000010
+                elif regA < regB:
+                    # Less than
+                    self.fl = 0b00000100
+                self.pc += 3
 
-            elif IR = self.RET_code:
-            '''
+            elif IR == self.CALL_code:
+                print('CALL CODE')
+
+            elif IR == self.RET_code:
+                print('RETURN CODE')
             
 
