@@ -118,7 +118,7 @@ class CPU:
         while running:
             IR = self.ram[self.pc]
             if IR == self.LDI_code:
-                print('LDI CODE')
+                #print('LDI CODE')
                 # Load immediate call. Set this data directly into a register for usage.
                 register = self.ram[self.pc + 1]
                 data = self.ram[self.pc + 2]
@@ -126,17 +126,17 @@ class CPU:
                 self.pc += 3
 
             elif IR == self.PRN_code:
-                print('PRN CODE')
+                #print('PRN CODE')
                 # Print code, get the data out of the register given in the next instruction and print it.
                 print(self.reg[self.ram[self.pc + 1]])
                 self.pc += 2
             
             elif IR == self.HLT_code:
-                print('HLT CODE')
+                #print('HLT CODE')
                 running = False
 
             elif IR == self.MUL_code:
-                print('MUL CODE')
+                #print('MUL CODE')
                 regA = self.ram[self.pc + 1]
                 regB = self.ram[self.pc + 2]
                 self.alu('MUL', regA, regB)
@@ -144,7 +144,7 @@ class CPU:
                 self.pc += 3
 
             elif IR == self.POP_code:
-                print('POP CODE')
+                #print('POP CODE')
                 SP = self.reg[7]
 
                 value = self.ram[SP]
@@ -154,7 +154,7 @@ class CPU:
                 self.pc += 2
 
             elif IR == self.PUSH_code:
-                print('PUSH CODE')
+                #print('PUSH CODE')
                 self.reg[7] = (SP - 1) % 255
                 SP = self.reg[7]
 
@@ -165,15 +165,15 @@ class CPU:
                 self.pc += 2
             
             elif IR == self.JMP_code:
-                print('JUMP CODE')
+                #print('JUMP CODE')
                 # Set our program counter to the value contained at the selected register.
                 self.pc = self.reg[self.ram[self.pc + 1]]
                 
             elif IR == self.JNQ_code:
-                print('JUMP NOT EQUAL CODE')
+                #print('JUMP NOT EQUAL CODE')
                 # `FL` bits: `00000LGE`
-                # If the equal flag isn't set...
-                if self.fl == 0b00000000:
+                # If the equal flag isn't set...                
+                if self.fl > 0b00000001:
                     # Jump to the value contained at the register
                     self.pc = self.reg[self.ram[self.pc + 1]]
                 else:
@@ -181,7 +181,7 @@ class CPU:
                     self.pc += 2
 
             elif IR == self.JEQ_code:
-                print('JUMP EQUAL CODE')
+                #print('JUMP EQUAL CODE')
                 # If the equal flag is set
                 if self.fl == 0b00000001:
                     # Jump to the value contained at the register
@@ -191,7 +191,7 @@ class CPU:
                     self.pc += 2
             
             elif IR == self.CMP_code:
-                print('COMPARE CODE')
+                #print('COMPARE CODE')
                 regA = self.reg[self.ram[self.pc + 1]]
                 regB = self.reg[self.ram[self.pc +2]]
                 # `FL` bits: `00000LGE`
