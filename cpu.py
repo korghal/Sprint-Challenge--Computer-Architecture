@@ -163,6 +163,32 @@ class CPU:
                 self.ram[SP] = value
 
                 self.pc += 2
+            
+            elif IR == self.JMP_code:
+                print('JUMP CODE')
+                # Set our program counter to the value contained at the selected register.
+                self.pc = self.reg[self.ram[self.pc + 1]]
+                
+            elif IR == self.JNQ_code:
+                print('JUMP NOT EQUAL CODE')
+                # `FL` bits: `00000LGE`
+                # If the equal flag isn't set...
+                if self.fl == 0b00000000:
+                    # Jump to the value contained at the register
+                    self.pc = self.reg[self.ram[self.pc + 1]]
+                else:
+                    # Continue down the program
+                    self.pc += 2
+
+            elif IR == self.JEQ_code:
+                print('JUMP EQUAL CODE')
+                # If the equal flag is set
+                if self.fl == 0b00000001:
+                    # Jump to the value contained at the register
+                    self.pc = self.reg[self.ram[self.pc + 1]]
+                else:
+                    # Continue
+                    self.pc += 2
             '''
             elif IR = self.CALL_code:
                 
